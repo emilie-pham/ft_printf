@@ -1,22 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   handle_oct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/08 17:34:08 by epham             #+#    #+#             */
-/*   Updated: 2019/03/08 19:33:29 by epham            ###   ########.fr       */
+/*   Created: 2019/03/21 13:35:46 by epham             #+#    #+#             */
+/*   Updated: 2019/03/21 14:26:01 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "../includes/ft_printf.h"
 
-typedef struct		s_printf
-{
-	int				width;
-	int				precision;
-}					t_printf;
 
-#endif
