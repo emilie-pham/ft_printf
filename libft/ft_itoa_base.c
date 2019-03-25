@@ -6,11 +6,11 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 12:35:12 by epham             #+#    #+#             */
-/*   Updated: 2019/03/17 12:33:47 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/25 14:37:21 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Libft/libft.h"
+#include "libft.h"
 
 int		ft_size(int value, int base)
 {

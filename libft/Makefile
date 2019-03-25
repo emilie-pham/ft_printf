@@ -6,15 +6,15 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 09:05:15 by anradix           #+#    #+#              #
-#    Updated: 2019/03/22 08:58:32 by epham            ###   ########.fr        #
+#    Updated: 2019/03/25 14:36:50 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = libft.a
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC = ft_atoi.c\
+SRC = 	ft_atoi.c\
 		ft_bzero.c\
 		ft_isalnum.c\
 		ft_isalpha.c\
@@ -22,6 +22,7 @@ SRC = ft_atoi.c\
 		ft_isdigit.c\
 		ft_isprint.c\
 		ft_itoa.c\
+		ft_itoa_base.c\
 		ft_lstadd.c\
 		ft_lstdel.c\
 		ft_lstdelone.c\
@@ -98,21 +99,21 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		@ar rc $(NAME) $?
-		@ranlib $(NAME)
-		@echo "libftprintf.a has been successfully created"
+	@ar rc $(NAME) $?
+	@ranlib $(NAME)
+	@echo "libft.a has been successfully created"
 
 %.o: %.c
-		@gcc $(FLAGS) -o $@ -c $<
+	@gcc $(FLAGS) -o $@ -c $<
 
 clean:
-		@rm -f $(OBJ)
-		@echo "libftprintf clean OK"
+	@rm -f $(OBJ)
+	@echo "libft clean OK"
 
 fclean: clean
-		@rm -f $(NAME)
-		@echo "libftprintf fclean OK"
+	@rm -f $(NAME)
+	@echo "libft fclean OK"
 
 
 re: fclean all
-		@echo "libftprintf re OK"
+	@echo "libft re OK"

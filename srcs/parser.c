@@ -6,11 +6,11 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 19:21:02 by epham             #+#    #+#             */
-/*   Updated: 2019/03/22 19:45:43 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/25 13:33:08 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../ft_printf.h"
 
 void printBits(unsigned int num)
 {

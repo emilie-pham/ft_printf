@@ -6,13 +6,14 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 09:09:50 by anradix           #+#    #+#             */
-/*   Updated: 2018/12/28 17:54:40 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/25 13:35:24 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <string.h>
+# include <stdlib.h>
 
 # define BUFF_SIZE 42
 

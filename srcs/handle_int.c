@@ -6,11 +6,11 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 11:52:50 by epham             #+#    #+#             */
-/*   Updated: 2019/03/22 19:36:53 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/25 13:33:03 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../ft_printf.h"
 
 char *right(char *nb, t_printf *store, char *print)
 {

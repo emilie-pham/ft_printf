@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 17:34:08 by epham             #+#    #+#             */
-/*   Updated: 2019/03/22 19:23:36 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/25 13:34:02 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ DIFFERENT VARIABLE DEPENDING ON NUMBER OF BITS
 
 #include <stdio.h>
 
-#include "../../Libft/libft.h"
+#include "libft/libft.h"
 
 typedef struct		s_printf
 {
