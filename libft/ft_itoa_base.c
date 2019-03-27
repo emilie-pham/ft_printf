@@ -6,56 +6,32 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 12:35:12 by epham             #+#    #+#             */
-/*   Updated: 2019/03/25 14:37:21 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/25 17:55:20 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_size(int value, int base)
+char    *ft_itoa_base(int value, int base)
 {
-	int count;
+    char    *s;
+    long    n;
+    int     sign;
+    int     i;
 
-	count = 0;
-	if (base != 10 && value < 0)
-		value *= -1;
-	if (base == 10 && value < 0)
-	{
-		count++;
-		value *= -1;
-	}
-	while (value > 0)
-	{
-		count++;
-		value /= base;
-	}
-	return (count);
-}
-
-char	*ft_itoa_base(int value, int base)
-{
-	int 	len;
-	char	*radix;
-	char	*ret;
-	
-	len = ft_size(value, base);
-	radix = "0123456789ABCDEF";
-	if (value == 0)
-		return ("0");
-	if (base == 10 && value == -2147483648)
-		return ("-2147483648");
-	if (!(ret = malloc(sizeof(char) * len + 1)))
-		return (NULL);
-	if (base == 10 && value < 0)
-		ret[0] = '-';
-	ret[len] = '\0';
-	if (value < 0)
-		value *= -1;
-	while (value > 0)
-	{
-		ret[len - 1] = radix[value % base];
-		len--;
-		value /= base;
-	}
-	return (ret);
+    n = (value < 0) ? -(long)value : value;
+    sign = (value < 0 && base == 10) ? -1 : 0;
+    i = (sign == -1) ? 2 : 1;
+    while ((n /= base) >= 1)
+        i++;
+    s = (char*)malloc(sizeof(char) * (i + 1));
+    s[i] = '\0';
+    n = (value < 0) ? -(long)value : value;
+    while (i-- + sign)
+    {
+        s[i] = (n % base < 10) ? n % base + '0' : n % base + 'A' - 10;
+        n /= base;
+    }
+    (i == 0) ? s[i] = '-' : 0;
+    return (s);
 }

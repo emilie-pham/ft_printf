@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:42:00 by epham             #+#    #+#             */
-/*   Updated: 2019/03/25 13:33:17 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/26 19:15:58 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,20 @@ int ft_printf(char *fmt, ...)
 	va_list ap; 								/* Points to each unnamed arg in turn */
 
 	char 			*p, *sval, cval;
-	int 			ival, count;
-	unsigned int	xval;
-	t_printf		*store;
+	int 			count;
+	intmax_t		ival;
+	uintmax_t		xval;
+	t_printf		*env;
 
 	va_start(ap, fmt);							/* make ap point to 1st unnamed argument */
 	p = fmt;
 	count = 0;
-	if (!(store = malloc(sizeof(t_printf))))	/* Initialize the structure */
+	if (!(env = malloc(sizeof(t_printf))))	/* Initialize the structure */
 		return (0) ;
-	store->flags = 0; 							/* Initialize the variable flags */
+	env->flags = 0; 							/* Initialize the variable flags */
 	while (*p)
 	{	
+		env->flags = 0;
 		/*      print until first %    */
 		while (*p != '%' && *p)
 		{
@@ -49,75 +51,71 @@ int ft_printf(char *fmt, ...)
 		while (*p && (*p == ' ' || *p == '-' || *p == '+' || *p == '#' || *p == '0'))
 		{
 			if (*p == ' ')				/* + values start with ' ' */
-				store->flags |= SPACE;
+				env->flags |= SPACE;
 			if (*p == '-')				/* Left justify */
-				store->flags |= MINUS;
+				env->flags |= MINUS;
 			if (*p == '+')				/* show sign */
-				store->flags |= PLUS;
+				env->flags |= PLUS;
 			if (*p == '#')
-				store->flags |= HASHTAG;
+				env->flags |= HASHTAG;
 			if (*p == '0')				/* fill largeur de champs with 0 */
-				store->flags |= ZERO;
+				env->flags |= ZERO;
 			p++;
 		}
 
 		/* 			LARGEUR            */
-		store->width = get_width_prec(&p);	/* Recupere valeur largeur avec * EN OPTION */
+		env->width = get_width_prec(&p);	/* Recupere valeur largeur avec * EN OPTION */
 		
 		/* OPTION
 		if (*p && *p == '*')
-			store->flags |= STAR;
+			env->flags |= STAR;
 		*/
 
 		/* 			PRECISION          */
 		if (*p == '.')
 		{
 			p++;
-			store->flags |= PRECISION;		/* Recupere valeur precision */
+			env->flags |= PRECISION;		/* Recupere valeur precision */
 		}
-		store->precision = get_width_prec(&p);
+		env->prec = get_width_prec(&p);
 
 		/* 		LENGTH	MODIF          */
-		get_modif(&p, store->flags);
+		get_modif(&p, env->flags);
 
 		/*             TYPE            */
 		if (*p == 'd' || *p == 'i')
 		{
-			ival = va_arg(ap, int);
-			store->flags = correct_flags_int(ival, store->flags);
-			if (store->flags & HH)
-				ival = (char)ival;
-			if (store->flags & H)
-				ival = (short int)ival;
-			if (store->flags & L)
-				ival = (long int)ival;
-			if (store->flags & LL)
-				ival = (long long int)ival;
-			if (store->flags & BIGL)
-				ival = (long double)ival;
-			count += ft_printnb(ival, store, &count);
+			ival = va_arg(ap, intmax_t);
+			correct_modif(env, &ival);
+			count += ft_printnb(ival, env);
 			p++;
 			continue ;
 		}
 		else if (*p == 'o' || *p == 'u' || *p == 'x' || *p == 'X')
 		{
-			xval = va_arg(ap, unsigned int);
+			xval = va_arg(ap, uintmax_t);
+			// printBits(env->flags);
+			correct_umodif(env, &xval);
+			count += ft_printoct(xval, env, &count);
+			p++;
+			continue ;
 		}
 		else if (*p == 'c')
 		{
 			cval = va_arg(ap, int);
 			ft_putchar(cval);
 			p++;
-			continue;
+			continue ;
 		}
 		else if (*p == 's')
 		{
 			sval = va_arg(ap, char *);
 			ft_putstr(sval);
 			p++;
-			continue;
+			continue ;
 		}
 	}
+	free(env);
 	va_end(ap); 							/* clean up when done */
 	return (count);
 }

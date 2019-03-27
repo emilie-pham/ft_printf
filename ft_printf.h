@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 17:34:08 by epham             #+#    #+#             */
-/*   Updated: 2019/03/25 13:34:02 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/26 18:37:34 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct		s_printf
 {
 	int 			flags;
 	size_t			width;
-	size_t			precision;
+	size_t			prec;
 	size_t			len;
 	size_t 			space;
 	size_t 			zero;
@@ -62,13 +62,17 @@ typedef struct		s_printf
 	char			type;
 }					t_printf;
 
+void printBits(unsigned int num);
+
 int 	ft_printf(char *fmt, ...);
 size_t	get_width_prec(char **p);
 void	get_modif(char **p, int flags);
 int 	correct_flags_int(int ival, int flags);
+void	correct_modif(t_printf *env, intmax_t *val);
+void	correct_umodif(t_printf *env, uintmax_t *val);
 char	*ft_itoa_base(int value, int base);
-size_t	size(int ival, t_printf *store, size_t len);
-void	get_space_zero(int ival, t_printf *store, size_t width, size_t prec);
-int		ft_printnb(int ival, t_printf *store, int *count);
+char    *ft_uitoa_base(unsigned int value, int base);
+int		ft_printnb(int ival, t_printf *env);
+int		ft_printoct(unsigned int ival, t_printf *env, int *count);
 
 #endif
