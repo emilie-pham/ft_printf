@@ -6,13 +6,13 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 12:35:12 by epham             #+#    #+#             */
-/*   Updated: 2019/03/25 17:55:20 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/28 18:16:15 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char    *ft_itoa_base(int value, int base)
+char    *ft_itoa_base(intmax_t value, int base)
 {
     char    *s;
     long    n;

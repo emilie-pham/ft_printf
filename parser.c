@@ -6,11 +6,11 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 19:21:02 by epham             #+#    #+#             */
-/*   Updated: 2019/03/26 17:18:35 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/28 19:14:03 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
 void printBits(unsigned int num)
 {
@@ -38,70 +38,82 @@ size_t	get_width_prec(char **p)
 	return (i);
 }
 
-void	get_modif(char **p, int flags)
+void	get_modif(char **p, t_printf *env)
 {
-	while (**p && (**p == 'h' || **p == 'l' || **p == 'L'))
+	while (**p && (**p == 'h' || **p == 'l' || **p == 'L' || **p == 'j'
+		|| **p == 'z'))
 	{
 		if (**p == 'h')
 		{
-			if (flags & H)
-				flags |= HH;
-			flags |= H;
+			if (env->flags & H)
+				env->flags |= HH;
+			env->flags |= H;
 		}
 		if (**p == 'l')
 		{
-			if (flags & L)
-				flags |= LL;
-			flags |= L;
+			if (env->flags & L)
+				env->flags |= LL;
+			env->flags |= L;
 		}
 		if (**p == 'L')
-			flags |= BIGL;
+			env->flags |= BIGL;
 		(*p)++;
 	}
 }
 
-int 	correct_flags_int(int ival, int flags)
+int 	correct_flags_int(int ival, t_printf *env)
 {
-	// printf("before correct : \n");
-	// printBits(flags);
-
-	if (flags & PLUS)		/* if PLUS, turn of SPACE */
-		flags &= ~SPACE;
-	if (flags & (MINUS | PRECISION))
-		flags &= ~ZERO;
-	if (ival < 0 && (flags & (PLUS | SPACE)))
-		flags &= ~(PLUS | SPACE);				/*  */
-	// printf("after correct : \n");
-	// printBits(flags);
-	return (flags);
+	env->preflen = 0;
+	if (env->flags & PLUS)		/* if PLUS, turn of SPACE */
+		env->flags &= ~SPACE;
+	if (env->flags & (MINUS | PREC))
+		env->flags &= ~ZERO;
+	if (ival < 0 && (env->flags & (PLUS | SPACE)))
+		env->flags &= ~(PLUS | SPACE);
+	if ((env->flags & HASH) && (env->type == 'x' || env->type == 'X'))
+	{
+		env->flags |= PREF;
+		env->preflen = 2;
+	}
+	if ((env->flags & HASH) && (env->type == 'o'))
+		env->preflen = 1;
+	return (env->flags);
 }
 
 void	correct_modif(t_printf *env, intmax_t *val)
 {
-	env->flags = correct_flags_int(*val, env->flags);
+	env->flags = correct_flags_int(*val, env);
 	if (env->flags & HH)
 		*val = (char)*val;
-	if (env->flags & H)
-		*val = (short int)*val;
-	if (env->flags & L)
-		*val = (long int)*val;
-	if (env->flags & LL)
-		*val = (long long int)*val;
-	if (env->flags & BIGL)
-		*val = (long double)*val;
+	else if (env->flags & H)
+		*val = (short)*val;
+	else if (env->flags & L)
+		*val = (long)*val;
+	else if (env->flags & LL)
+		*val = (long long)*val;
+	else if (env->flags & J)
+		*val = (intmax_t)*val;
+	else if (env->flags & Z)
+		*val = (size_t)*val;
+	else
+		*val = (int)*val;
 }
 
 void	correct_umodif(t_printf *env, uintmax_t *val)
 {
-	env->flags = correct_flags_int(*val, env->flags);
+	env->flags = correct_flags_int(*val, env);
 	if (env->flags & HH)
-		*val = (char)*val;
-	if (env->flags & H)
-		*val = (short int)*val;
-	if (env->flags & L)
-		*val = (long int)*val;
-	if (env->flags & LL)
-		*val = (long long int)*val;
-	if (env->flags & BIGL)
-		*val = (long double)*val;
+		*val = (unsigned char)*val;
+	else if (env->flags & H)
+		*val = (unsigned short int)*val;
+	else if (env->flags & L)
+		*val = (unsigned long int)*val;
+	else if (env->flags & LL)
+		*val = (unsigned long long int)*val;
+	else if (env->flags & J)
+		*val = (uintmax_t)*val;
+	else if (env->flags & Z)
+		*val = (ssize_t)*val;
+	else
+		*val = (unsigned int)*val;
 }

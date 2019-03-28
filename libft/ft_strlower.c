@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_uitoa_base.c                                    :+:      :+:    :+:   */
+/*   ft_strlower.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/25 17:56:20 by epham             #+#    #+#             */
-/*   Updated: 2019/03/28 18:19:55 by epham            ###   ########.fr       */
+/*   Created: 2019/03/27 16:28:22 by epham             #+#    #+#             */
+/*   Updated: 2019/03/27 17:48:32 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-char    *ft_uitoa_base(uintmax_t value, int base)
+void	ft_strlower(char *str)
 {
-	char    *s;
-    long    n;
-    int     i;
+	int i;
 
-    n = value;
-    i = 1;
-    while ((n /= base) >= 1)
-        i++;
-    s = (char*)malloc(sizeof(char) * (i + 1));
-    s[i] = '\0';
-    n = value;
-    while (i--)
-    {
-        s[i] = (n % base < 10) ? n % base + '0' : n % base + 'A' - 10;
-        n /= base;
-    }
-    return (s);
+	i = 0;
+	while (str[i])
+	{
+		str[i] = ft_tolower(str[i]);
+		i++;
+	}
 }

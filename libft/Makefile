@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 09:05:15 by anradix           #+#    #+#              #
-#    Updated: 2019/03/25 14:36:50 by epham            ###   ########.fr        #
+#    Updated: 2019/03/27 16:31:58 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ SRC = 	ft_atoi.c\
 		ft_strsub.c\
 		ft_strtrim.c\
 		ft_tolower.c\
+		ft_strlower.c\
 		ft_toupper.c\
 		ft_add_list.c\
 		ft_count_words.c\

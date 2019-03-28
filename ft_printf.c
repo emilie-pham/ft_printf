@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:42:00 by epham             #+#    #+#             */
-/*   Updated: 2019/03/26 19:15:58 by epham            ###   ########.fr       */
+/*   Updated: 2019/03/28 18:58:23 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ int ft_printf(char *fmt, ...)
 	va_start(ap, fmt);							/* make ap point to 1st unnamed argument */
 	p = fmt;
 	count = 0;
-	if (!(env = malloc(sizeof(t_printf))))	/* Initialize the structure */
+	if (!(env = malloc(sizeof(t_printf))))		/* Initialize the structure */
 		return (0) ;
-	env->flags = 0; 							/* Initialize the variable flags */
 	while (*p)
 	{	
-		env->flags = 0;
+		env->flags = 0;							/* Initialize the variable flags */
+		env->space = 0;							/* initialize to 0 before calling get_uspace_uzero */
+		env->zero = 0;
 		/*      print until first %    */
 		while (*p != '%' && *p)
 		{
@@ -57,7 +58,7 @@ int ft_printf(char *fmt, ...)
 			if (*p == '+')				/* show sign */
 				env->flags |= PLUS;
 			if (*p == '#')
-				env->flags |= HASHTAG;
+				env->flags |= HASH;
 			if (*p == '0')				/* fill largeur de champs with 0 */
 				env->flags |= ZERO;
 			p++;
@@ -75,18 +76,20 @@ int ft_printf(char *fmt, ...)
 		if (*p == '.')
 		{
 			p++;
-			env->flags |= PRECISION;		/* Recupere valeur precision */
+			env->flags |= PREC;		/* Recupere valeur precision */
 		}
 		env->prec = get_width_prec(&p);
 
 		/* 		LENGTH	MODIF          */
-		get_modif(&p, env->flags);
+		get_modif(&p, env);
 
 		/*             TYPE            */
 		if (*p == 'd' || *p == 'i')
 		{
 			ival = va_arg(ap, intmax_t);
 			correct_modif(env, &ival);
+			if (ival == 0)
+				zero(env);
 			count += ft_printnb(ival, env);
 			p++;
 			continue ;
@@ -94,9 +97,18 @@ int ft_printf(char *fmt, ...)
 		else if (*p == 'o' || *p == 'u' || *p == 'x' || *p == 'X')
 		{
 			xval = va_arg(ap, uintmax_t);
+			env->type = *p;
 			// printBits(env->flags);
+			// printf("\n\n");
 			correct_umodif(env, &xval);
-			count += ft_printoct(xval, env, &count);
+			if (xval == 0)
+				zero(env);
+			if (env->type == 'o')
+				count += ft_printoct(xval, env, &count, 8);
+			else if (env->type == 'x' || env->type =='X')
+				count += ft_printoct(xval, env, &count, 16);
+			else
+				count += ft_printoct(xval, env, &count, 10);
 			p++;
 			continue ;
 		}
