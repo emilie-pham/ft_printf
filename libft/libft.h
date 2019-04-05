@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 09:09:50 by anradix           #+#    #+#             */
-/*   Updated: 2019/03/28 18:17:04 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/02 15:29:24 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ char				**ft_init_tab(size_t y, size_t x, char c);
 char				***ft_init_triple_tab(int nb_pattern, int x, int y, char c);
 int					ft_sqrt(int nb);
 size_t				ft_triple_tablen(char ***tab);
+int					ft_power(int num, int pow);
 
 #endif

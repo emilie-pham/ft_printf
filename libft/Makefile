@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 09:05:15 by anradix           #+#    #+#              #
-#    Updated: 2019/03/27 16:31:58 by epham            ###   ########.fr        #
+#    Updated: 2019/04/01 20:00:44 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,8 @@ SRC = 	ft_atoi.c\
 		ft_init_triple_tab.c\
 		ft_sqrt.c\
 		ft_tabdel.c\
-		ft_triple_tabdel.c
+		ft_triple_tabdel.c\
+		ft_power.c
 
 OBJ = $(SRC:.c=.o)
 

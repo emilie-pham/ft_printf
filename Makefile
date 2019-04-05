@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/25 10:19:14 by epham             #+#    #+#              #
-#    Updated: 2019/03/26 16:10:34 by epham            ###   ########.fr        #
+#    Updated: 2019/04/04 13:04:42 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,42 +15,58 @@
 .PHONY: fclean
 .PHONY: re
 
-NAME		=	libftprintf.a
+CC			= 	gcc
 
-FLAGS		=	-Wall -Wextra -Werror
+NAME		= 	libftprintf.a
 
-SRC			=	ft_printf.c 		\
-				parser.c     		\
+FLAGS		= 	-Wall -Wextra -Werror
+
+LIBFT		= 	libft
+
+DIR_S		= 	srcs
+
+DIR_O		= 	obj
+
+HEADER		= 	includes
+
+SOURCES		=	ft_printf.c 		\
+				parse_flags.c 		\
+				parse_type.c 		\
+				correct_cast_flags.c\
 				handle_int.c 		\
-				handle_oct.c 		\
-				ft_uitoa_base.c
+				handle_unsigned.c	\
+				handle_floats.c 	\
+				handle_char.c 		\
+				handle_strings.c 	\
+				ft_uitoa_base.c 	\
+				ft_ftoa.c 
 
-OBJ			=	$(SRC:.c=.o)
+SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 
-LIBFT_H		=	-Ilibft/
-
-LIB_O		=	$(addprefix ./libft/, *.o)
+OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
 all: $(NAME)
 
-%.o : %.c
-	@gcc $(CFLAGS) $(LIBFT_H) -c $?
-
-$(NAME): $(OBJ)
-	@make -C libft/
-	@ar rc libftprintf.a $(OBJ) $(LIB_O)
+$(NAME): $(OBJS)
+	@make -C $(LIBFT)
+	@cp libft/libft.a ./$(NAME)
+	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
-	@echo "libftprintf.a has been successfully created"
+	@echo "libftprintf.a successfully created"
+
+$(DIR_O)/%.o: $(DIR_S)/%.c $(HEADER)/ft_printf.h
+	@mkdir -p obj
+	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
 
 clean:
-	@make clean -C libft/
-	@rm -rf $(OBJ)
+	@rm -f $(OBJS)
+	@rm -rf $(DIR_O)
+	@make clean -C $(LIBFT)
 	@echo "libftprintf clean OK"
 
 fclean: clean
-	@make fclean -C libft/
-	@rm -rf $(NAME)
+	@rm -f $(NAME)
+	@make fclean -C $(LIBFT)
 	@echo "libftprintf fclean OK"
 
 re: fclean all
-	@echo "libftprintf re OK"
