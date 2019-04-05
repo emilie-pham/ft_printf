@@ -6,18 +6,18 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 19:21:02 by epham             #+#    #+#             */
-/*   Updated: 2019/04/05 15:24:26 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/05 10:15:56 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int 	correct_flags(long double ival, t_printf *env)
+int		correct_flags(long double ival, t_printf *env)
 {
 	env->preflen = 0;
-	if (env->flags & PLUS)		/* if PLUS, turn of SPACE */
+	if (env->flags & PLUS)
 		env->flags &= ~SPACE;
-	if ((env->type != 'f' && env->type != 'F') 
+	if ((env->type != 'f' && env->type != 'F')
 		&& env->flags & (MINUS | PREC))
 		env->flags &= ~ZERO;
 	if (ival < 0 && (env->flags & (PLUS | SPACE)))
@@ -29,7 +29,7 @@ int 	correct_flags(long double ival, t_printf *env)
 	if ((env->flags & HASH) && (env->type == 'o' || env->type == 'O'))
 		env->preflen = 1;
 	if ((env->flags & HASH || env->flags & PLUS)
-		&& (env->type == 'u' || env->type == 'U'))
+		&& (env->type == 'u'))
 	{
 		env->flags &= ~PLUS;
 		env->flags &= ~HASH;
@@ -37,7 +37,7 @@ int 	correct_flags(long double ival, t_printf *env)
 	return (env->flags);
 }
 
-void	correct_modif(t_printf *env, intmax_t *val)
+void	correct_modif(t_printf *env, long long *val)
 {
 	env->flags = correct_flags(*val, env);
 	if (env->flags & HH)
@@ -49,7 +49,7 @@ void	correct_modif(t_printf *env, intmax_t *val)
 	else if (env->flags & L)
 		*val = (long)*val;
 	else if (env->flags & J)
-		*val = (intmax_t)*val;
+		*val = (long long)*val;
 	else if (env->flags & Z)
 		*val = (size_t)*val;
 	else
@@ -66,14 +66,14 @@ void	correct_fmodif(t_printf *env, long double *val)
 	else if (env->flags & BIGL)
 		*val = (long double)*val;
 	else if (env->flags & J)
-		*val = (intmax_t)*val;
+		*val = (long long)*val;
 	else if (env->flags & Z)
 		*val = (size_t)*val;
 	else
 		*val = (double)*val;
 }
 
-void	correct_umodif(t_printf *env, uintmax_t *val)
+void	correct_umodif(t_printf *env, unsigned long long *val)
 {
 	env->flags = correct_flags(*val, env);
 	if (env->type == 'U')
@@ -87,7 +87,7 @@ void	correct_umodif(t_printf *env, uintmax_t *val)
 	else if (env->flags & L)
 		*val = (unsigned long int)*val;
 	else if (env->flags & J)
-		*val = (uintmax_t)*val;
+		*val = (unsigned long long)*val;
 	else if (env->flags & Z)
 		*val = (size_t)*val;
 	else

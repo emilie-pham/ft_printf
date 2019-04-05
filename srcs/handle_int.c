@@ -6,13 +6,12 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 11:52:50 by epham             #+#    #+#             */
-/*   Updated: 2019/04/04 19:16:04 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/05 11:47:21 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-/* CASE WHERE VALUE = 0 , BOTH FOR SIGNED AND UNSIGNED */
 void	zero(t_printf *env)
 {
 	if (env->type != 'p')
@@ -31,8 +30,7 @@ void	zero(t_printf *env)
 		env->flags |= NULPOINT;
 }
 
-/* COMPUTE SIZE OF STRING NEEDED */
-void	size(intmax_t nb, t_printf *env, int width, int len)
+void	size(long long nb, t_printf *env, int width, int len)
 {
 	int flags;
 
@@ -50,8 +48,7 @@ void	size(intmax_t nb, t_printf *env, int width, int len)
 		env->sz = env->prec;
 }
 
-/* COMPUTE NUMBER OF SPACES & ZERO NEEDED TO FILL THE STRING */
-void	get_space_zero(intmax_t ival, t_printf *env, int width, int prec)
+void	get_space_zero(long long ival, t_printf *env, int width, int prec)
 {
 	int len;
 
@@ -80,7 +77,6 @@ void	get_space_zero(intmax_t ival, t_printf *env, int width, int prec)
 		env->space = 1;
 }
 
-/* STRING FILL */
 char	*fill_int(char *nb, t_printf *env, char *print, int lr)
 {
 	int i;
@@ -109,7 +105,7 @@ char	*fill_int(char *nb, t_printf *env, char *print, int lr)
 	return (print);
 }
 
-int		ft_printnb(intmax_t ival, t_printf *env)
+int		ft_printnb(long long ival, t_printf *env)
 {
 	char		*print;
 	int			i;
@@ -122,14 +118,17 @@ int		ft_printnb(intmax_t ival, t_printf *env)
 	env->space = 0;
 	env->zero = 0;
 	env->len = ival == 0 && env->flags & NULPREC ? 0 : ft_strlen(env->nb);
+	len = 0;
 	size(ival, env, env->width, env->len);
-	print = ft_strnew(env->sz);
-	get_space_zero(ival, env, env->width, env->prec);
-	i = (env->flags & MINUS) ? 0 : 1;
-	print = fill_int(env->nb, env, print, i);
-	ft_putstr(print);
-	len = ft_strlen(print);
-	free(print);
-	free(env->nb);
+	if ((print = ft_strnew(env->sz)))
+	{
+		get_space_zero(ival, env, env->width, env->prec);
+		i = (env->flags & MINUS) ? 0 : 1;
+		print = print ? fill_int(env->nb, env, print, i) : print;
+		ft_putstr(print);
+		len = ft_strlen(print);
+		free(print);
+		free(env->nb);
+	}
 	return (len);
 }

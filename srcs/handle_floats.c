@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 19:00:33 by epham             #+#    #+#             */
-/*   Updated: 2019/04/04 18:01:05 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/05 11:48:45 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,16 @@ char	*fill_floats(char *fl, t_printf *env, char *print, int lr)
 		print[i + j] = fl[j];
 		j++;
 	}
-	i = i + j;
 	while (env->space > 0 && (env->space)--)
-		print[i++] = ' ';
+		print[i + j++] = ' ';
 	return (print);
 }
 
 int		ft_printfloats(long double fval, t_printf *env)
 {
-	char *print;
-	int i;
-	int len;
+	char	*print;
+	int		i;
+	int		len;
 
 	len = 0;
 	correct_fmodif(env, &fval);
@@ -96,13 +95,15 @@ int		ft_printfloats(long double fval, t_printf *env)
 	env->nb = ft_ftoa(fval, env->prec);
 	env->len = ft_strlen(env->nb);
 	f_size(env);
-	print = ft_strnew(env->sz);
-	fspace_fzero(env);
-	i = (env->flags & MINUS) ? 0 : 1;
-	print = fill_floats(env->nb, env, print, i);
-	ft_putstr(print);
-	len = ft_strlen(print);
-	free(print);
-	free(env->nb);
+	if ((print = ft_strnew(env->sz)))
+	{
+		fspace_fzero(env);
+		i = (env->flags & MINUS) ? 0 : 1;
+		print = fill_floats(env->nb, env, print, i);
+		ft_putstr(print);
+		len = ft_strlen(print);
+		free(print);
+		free(env->nb);
+	}
 	return (len);
 }

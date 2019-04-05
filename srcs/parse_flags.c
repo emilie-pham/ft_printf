@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 10:37:41 by epham             #+#    #+#             */
-/*   Updated: 2019/04/04 19:06:53 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/04 19:34:16 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 void	get_flags(char **p, t_printf *env)
 {
-	while (**p && (**p == ' ' || **p == '-' || **p == '+' || **p == '#' || **p == '0'))
+	while (**p && (**p == ' ' || **p == '-' || **p == '+'
+		|| **p == '#' || **p == '0'))
 	{
-		if (**p == ' ')				/* + values start with ' ' */
+		if (**p == ' ')
 			env->flags |= SPACE;
-		if (**p == '-')				/* Left justify */
+		if (**p == '-')
 			env->flags |= MINUS;
-		if (**p == '+')				/* show sign */
+		if (**p == '+')
 			env->flags |= PLUS;
 		if (**p == '#')
 			env->flags |= HASH;
-		if (**p == '0')				/* fill largeur de champs with 0 */
+		if (**p == '0')
 			env->flags |= ZERO;
 		(*p)++;
 	}
@@ -77,10 +78,10 @@ void	parse_flags(char **p, int *count, t_printf *env, va_list *ap)
 		ft_putchar(*(*p)++);
 		(*count)++;
 	}
-	if (**p && **p == '%')
+	if (**p)
 		(*p)++;
-	get_flags(p, env);					/* FLAGS */
-	env->width = **p == '*' ? va_arg(*ap, int) : get_width_prec(p);	/* WIDTH */
+	get_flags(p, env);
+	env->width = **p == '*' ? va_arg(*ap, int) : get_width_prec(p);
 	if (**p == '*')
 		(*p)++;
 	if (env->width < 0)
