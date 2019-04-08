@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 19:00:33 by epham             #+#    #+#             */
-/*   Updated: 2019/04/05 11:48:45 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/08 11:08:16 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*fill_floats(char *fl, t_printf *env, char *print, int lr)
 		print[i++] = ' ';
 	if (env->flags & SPACE && env->space && env->space--)
 		print[i++] = ' ';
-	else if (env->flags & PLUS)
+	else if (env->flags & PLUS && !(env->flags & SIGN))
 		print[i++] = '+';
 	else if (env->flags & SIGN)
 		print[i++] = '-';
@@ -88,7 +88,7 @@ int		ft_printfloats(long double fval, t_printf *env)
 
 	len = 0;
 	correct_fmodif(env, &fval);
-	if (fval < 0)
+	if (fval < 0 || fval == -0.0)
 		env->flags |= SIGN;
 	fval = fval < 0 ? -fval : fval;
 	env->prec = !(env->flags & PREC) ? 6 : env->prec;

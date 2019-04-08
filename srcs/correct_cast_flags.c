@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 19:21:02 by epham             #+#    #+#             */
-/*   Updated: 2019/04/05 10:15:56 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/08 11:06:56 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	correct_umodif(t_printf *env, unsigned long long *val)
 	env->flags = correct_flags(*val, env);
 	if (env->type == 'U')
 		*val = (unsigned long)*val;
+	else if (env->type == 'p')
+		*val = (unsigned long long)*val;
 	else if (env->flags & HH)
 		*val = (unsigned char)*val;
 	else if (env->flags & H)

@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 17:34:08 by epham             #+#    #+#             */
-/*   Updated: 2019/04/05 10:56:01 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/08 11:06:25 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int				ft_printf(char *fmt, ...);
 
 void			parse_flags(char **p, int *count, t_printf *env, va_list *ap);
 void			get_type_fuoxint(int *count, char **p, va_list *ap
-	, t_printf *env);
+				, t_printf *env);
 void			get_type_dicsp(int *count, char **p, va_list *ap
-	, t_printf *env);
+				, t_printf *env);
 void			correct_modif(t_printf *env, long long *val);
 void			correct_umodif(t_printf *env, unsigned long long *val);
 void			correct_fmodif(t_printf *env, long double *val);

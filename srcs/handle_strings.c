@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 17:24:40 by epham             #+#    #+#             */
-/*   Updated: 2019/04/05 11:43:48 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/08 11:09:45 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*fill_str(const char *str, t_printf *env, char *print, int lr)
 		print[j++] = ' ';
 	while (lr == 1 && env->space && env->space--)
 		print[j++] = ' ';
+	while (env->flags & ZERO && env->zero--)
+		print[j++] = '0';
 	while (str[i] && j < env->sz && ((env->prec && i < env->prec)
 		|| !(env->flags & PREC)))
 		print[j++] = str[i++];
@@ -45,6 +47,9 @@ int		ft_printstr(const char *sval, t_printf *env)
 	env->sz = env->width > len ? env->width : len;
 	printlen = 0;
 	env->space = env->sz > len ? env->sz - len : 0;
+	env->space = env->flags & PREC && env->prec == 0 ? env->sz : env->space;
+	env->zero = env->flags & ZERO ? env->space : 0;
+	env->space = env->zero > 0 ? 0 : env->space;
 	i = env->flags & MINUS ? 0 : 1;
 	if ((print = ft_strnew(env->sz)))
 	{

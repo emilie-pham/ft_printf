@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 11:52:50 by epham             #+#    #+#             */
-/*   Updated: 2019/04/05 11:47:21 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/08 11:09:23 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*fill_int(char *nb, t_printf *env, char *print, int lr)
 		print[i++] = ' ';
 	if (env->flags & SPACE && env->space > 0 && (env->space)--)
 		print[i++] = ' ';
-	else if (env->flags & PLUS)
+	else if (env->flags & PLUS && nb[0] != '-')
 		print[i++] = '+';
 	else if (nb[0] == '-')
 	{

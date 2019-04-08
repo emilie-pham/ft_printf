@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 11:02:10 by epham             #+#    #+#             */
-/*   Updated: 2019/04/05 10:52:23 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/08 11:10:42 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	get_type_dicsp(int *count, char **p, va_list *a, t_printf *env)
 		*count += ft_printnb(va_arg(*a, long long), env);
 		(*p)++;
 	}
-	else if (**p == 's')
+	else if (**p == 's' || **p == 'S')
 	{
 		*count += ft_printstr((const char *)va_arg(*a, char *), env);
 		(*p)++;
@@ -32,7 +32,7 @@ void	get_type_dicsp(int *count, char **p, va_list *a, t_printf *env)
 		*count += ft_printuint((unsigned long long)va_arg(*a, void*), env, 16);
 		(*p)++;
 	}
-	else if (**p == 'c' || **p == '%')
+	else if (**p == 'c' || **p == 'C' || **p == '%')
 	{
 		*count += **p == '%' ? ft_printchar('%', env)
 		: ft_printchar(va_arg(*a, int), env);

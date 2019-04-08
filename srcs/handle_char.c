@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 16:52:37 by epham             #+#    #+#             */
-/*   Updated: 2019/04/05 11:50:23 by epham            ###   ########.fr       */
+/*   Updated: 2019/04/08 11:07:59 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	*fill_char(int cval, t_printf *env, char *print, int lr)
 			print[i++] = ' ';
 		while (env->zero && env->zero--)
 			print[i++] = '0';
-		print[i++] = (unsigned char)cval;
+		if (cval != 0)
+			print[i++] = (unsigned char)cval;
 		while (env->space && env->space--)
 			print[i++] = ' ';
 	}
